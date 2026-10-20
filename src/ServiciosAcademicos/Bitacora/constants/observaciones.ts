@@ -1,0 +1,80 @@
+import type { Filtro, Observacion } from '../types'
+
+export const filtros: Filtro[] = [
+  { id: 'todas', label: 'Todas las Materias', icon: 'sliders' },
+  { id: 'espanol', label: 'Español II', icon: 'book-open' },
+  { id: 'quimica', label: 'Química I', icon: 'zap' },
+  { id: 'tecnologia', label: 'Tecnología', icon: 'presentation' },
+  { id: 'civica', label: 'Formación Cívica', icon: 'shield' },
+]
+
+export const observaciones: Observacion[] = [
+  {
+    id: 'obs-22-oct',
+    tone: 'menta',
+    icon: 'check',
+    fecha: '22 de Octubre, 2024',
+    hora: '10:15 hrs',
+    lugar: 'Módulo 3 · Matutino',
+    materia: 'Español II',
+    docente: 'Prof. Andrés Salazar (Docente Titular)',
+    materiaIcon: 'book-open',
+    categoria: { label: 'Logro / Ajuste Exitoso en Clase', tone: 'menta' },
+    nota: [
+      { text: 'Presentó excelente concentración al trabajar con la ' },
+      { text: 'rúbrica visual numerada', highlight: 'forest' },
+      {
+        text: '. Logró redactar el texto de 3 párrafos sin signos de fatiga ni sobrecarga. Realizó consulta oportuna con su compañero tutor.',
+      },
+    ],
+    chipsLabel: 'Estrategias DUA:',
+    chips: ['Pauta 2.5: Apoyo auditivo y visual', 'Pauta 7.3: Minimizar distracciones'],
+    link: { label: '1 Nota de Psicología anexada', icon: 'link' },
+    filtro: 'espanol',
+  },
+  {
+    id: 'obs-15-oct',
+    tone: 'sky',
+    icon: 'ear',
+    fecha: '15 de Octubre, 2024',
+    hora: '12:40 hrs',
+    lugar: 'Laboratorio de Ciencias',
+    materia: 'Química I',
+    docente: 'Profa. Ana Crystel Castañón',
+    materiaIcon: 'zap',
+    categoria: { label: 'Sensorial / Regulación Exitosa', tone: 'sky', icon: 'headphones' },
+    nota: [
+      {
+        text: 'Se observó inquietud durante la práctica de laboratorio debido al zumbido de los extractores de aire. Se le facilitaron sus ',
+      },
+      { text: 'protectores auditivos de inmediato', highlight: 'steel' },
+      { text: ' y continuó el pesaje de reactivos con total normalidad.' },
+    ],
+    chipsLabel: 'Recurso utilizado:',
+    chips: ['Kit Sensorial de Aula N° 3', 'Regulación en 3 minutos'],
+    link: { label: 'Validado por Coordinación', icon: 'check', tone: 'steel' },
+    filtro: 'quimica',
+  },
+  {
+    id: 'obs-02-oct',
+    tone: 'peach',
+    icon: 'users',
+    fecha: '02 de Octubre, 2024',
+    hora: '08:30 hrs',
+    horaTone: 'coffee',
+    lugar: 'Taller de Cómputo',
+    materia: 'Tecnología',
+    docente: 'Prof. Raúl Paredes',
+    materiaIcon: 'presentation',
+    categoria: { label: 'Socialización y Trabajo en Equipo', tone: 'peach' },
+    nota: [
+      { text: 'Dificultad inicial para integrarse en equipo. Se reasignó discretamente a su ' },
+      { text: 'equipo base con Emiliano R.', highlight: 'coffee' },
+      { text: ', con resultados altamente favorables.' },
+    ],
+    chipsLabel: 'Estrategia socioafectiva:',
+    chips: ['Pareja Tutora Asignada'],
+    link: { label: 'Guardar en reporte mensual', icon: 'bookmark', tone: 'coffee' },
+    filtro: 'tecnologia',
+  },
+]

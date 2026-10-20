@@ -1,0 +1,50 @@
+:root {
+  --color-bg: #F7F9F8;
+  --color-card: #FFFFFF;
+  --color-surface: #F0F2F1;
+  --color-surface-alt: #E9EEEC;
+  --color-field: #F0F2F1;
+  --color-chip: #F0F2F1;
+  --color-forest: #22524A;
+  --color-logo: #3F7A63;
+  --color-steel: #2C5A7A;
+  --color-sky: #BFE0FF;
+  --color-accent: #22524A;
+  --color-text-primary: #1A1C1B;
+  --color-text-placeholder: #8A8F8D;
+  --gradient-side: linear-gradient(180deg, #DCE6DF 0%, #3B6A58 100%);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --font-family: 'Georgia','Times New Roman','Cambria','Cochin','Palatino Linotype','Book Antiqua',serif;
+  --size-min-touch: 48px;
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0F1518;
+  --color-card: #172024;
+  --color-surface: #1B2529;
+  --color-surface-alt: #222D33;
+  --color-field: #1B2529;
+  --color-chip: #222D33;
+  --color-forest: #2C6B58;
+  --color-logo: #469277;
+  --color-steel: #93BCD8;
+  --color-sky: #2C4A5E;
+  --color-accent: #7CC7A6;
+  --color-text-primary: #E8ECEA;
+  --color-text-placeholder: #8A9490;
+  --gradient-side: linear-gradient(180deg, #1B2529 0%, #0E3A2E 100%);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 6px 16px -4px rgba(0,0,0,0.55);
+}

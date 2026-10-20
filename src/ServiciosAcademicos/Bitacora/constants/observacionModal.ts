@@ -1,0 +1,121 @@
+import type { ObservacionModalContent } from '../types'
+
+export const observacionModal: ObservacionModalContent = {
+  header: {
+    pill: { icon: 'eye', label: 'Bitácora Docente Compartida' },
+    badge: 'Formato de Alta Legibilidad AAA',
+    title: 'Registrar Nueva Observación de Aula',
+    closeLabel: 'Cerrar',
+  },
+  context: {
+    studentLabel: 'Estudiante asignado',
+    matricula: 'Matrícula: NX-2024-881',
+    specialistLabel: 'Especialista de seguimiento',
+    specialistIcon: 'briefcase-medical',
+    specialistName: 'Dra. Claudia Méndez',
+    specialistArea: 'Gabinete de Psicopedagogía',
+  },
+  asignatura: {
+    label: 'Asignatura y Titular Responsable',
+    icon: 'book-open',
+    help: 'Clase presencial del turno regular',
+  },
+  fecha: {
+    label: 'Fecha y Momento de la Observación',
+    icon: 'calendar',
+    value: 'Hoy, 04 de Febrero 2025 · 16:30 hrs',
+    help: 'Predeterminada automáticamente al horario en curso',
+  },
+  tipo: {
+    label: 'Tipo de Observación o Indicador Pedagógico',
+    icon: 'grid',
+  },
+  descripcion: {
+    label: 'Descripción Detallada del Hecho y Ajuste DUA',
+    icon: 'file-text',
+    pautaLabel: 'Pauta Activa: Atenuación Sonora',
+    help: 'Describa con claridad el hecho observado, los detonantes identificados y el recurso o ajuste razonable utilizado en clase.',
+    calidad: 'Redacción clara y sin tecnicismos punitivos',
+    calidadIcon: 'check',
+    defaultText:
+      'Durante la lectura colectiva de Español II, Luis Andrés utilizó sus protectores auditivos atenuantes y concluyó el análisis del poema en tiempo reglamentario sin signos de fatiga.',
+  },
+  notificar: {
+    title: 'Notificar automáticamente al Gabinete de Psicología y adjuntar al expediente DUA',
+    body: 'Se enviará copia con prioridad estándar a la Dra. Claudia Méndez para revisión en la próxima junta técnica escolar.',
+  },
+  footer: {
+    cancel: { label: 'Cancelar / Cerrar', icon: 'circle-x' },
+    save: { label: 'Guardar Observación en Bitácora', icon: 'circle-check' },
+    savingLabel: 'Guardando...',
+    error: 'Escribe una descripción para guardar la observación.',
+  },
+  asignaturas: [
+    {
+      id: 'espanol',
+      label: 'Español II (Prof. Andrés Salazar)',
+      materia: 'Español II',
+      docente: 'Prof. Andrés Salazar (Docente Titular)',
+      materiaIcon: 'book-open',
+      filtro: 'espanol',
+    },
+    {
+      id: 'quimica',
+      label: 'Química I (Profa. Ana Crystel Castañón)',
+      materia: 'Química I',
+      docente: 'Profa. Ana Crystel Castañón',
+      materiaIcon: 'zap',
+      filtro: 'quimica',
+    },
+    {
+      id: 'tecnologia',
+      label: 'Tecnología (Prof. Raúl Paredes)',
+      materia: 'Tecnología',
+      docente: 'Prof. Raúl Paredes',
+      materiaIcon: 'presentation',
+      filtro: 'tecnologia',
+    },
+    {
+      id: 'civica',
+      label: 'Formación Cívica (Profa. Diana Robles)',
+      materia: 'Formación Cívica',
+      docente: 'Profa. Diana Robles',
+      materiaIcon: 'shield',
+      filtro: 'civica',
+    },
+  ],
+  tipos: [
+    {
+      id: 'logro',
+      icon: 'star',
+      title: 'Logro o Ajuste Exitoso',
+      subtitle: 'Respuesta favorable a pautas DUA',
+      tone: 'menta',
+      categoria: { label: 'Logro / Ajuste Exitoso en Clase', tone: 'menta' },
+    },
+    {
+      id: 'sensorial',
+      icon: 'ear',
+      title: 'Regulación Sensorial',
+      subtitle: 'Luz, sonido o saturación ambiental',
+      tone: 'sky',
+      categoria: { label: 'Sensorial / Regulación Exitosa', tone: 'sky', icon: 'headphones' },
+    },
+    {
+      id: 'aprendizaje',
+      icon: 'user-cog',
+      title: 'Dificultad de Aprendizaje',
+      subtitle: 'Comprensión, ritmo o entrega de tarea',
+      tone: 'peach',
+      categoria: { label: 'Dificultad de Aprendizaje', tone: 'peach' },
+    },
+    {
+      id: 'social',
+      icon: 'users',
+      title: 'Socialización / Conducta',
+      subtitle: 'Interacción con pares y trabajo grupal',
+      tone: 'peach',
+      categoria: { label: 'Socialización y Trabajo en Equipo', tone: 'peach' },
+    },
+  ],
+}
