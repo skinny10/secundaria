@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 
 export type ThemeMode = 'light' | 'dark'
 
@@ -11,20 +11,50 @@ function getInitialTheme(): ThemeMode {
   return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-export function useTheme() {
-  const [theme, setTheme] = useState<ThemeMode>(getInitialTheme)
+let theme: ThemeMode = getInitialTheme()
+const listeners = new Set<() => void>()
 
-  useEffect(() => {
+function applyTheme(next: ThemeMode) {
+  theme = next
+  if (typeof document !== 'undefined') {
     const root = document.documentElement
-    if (theme === 'dark') {
+    if (next === 'dark') {
       root.setAttribute('data-theme', 'dark')
     } else {
       root.removeAttribute('data-theme')
     }
-    window.localStorage.setItem(STORAGE_KEY, theme)
-  }, [theme])
+  }
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem(STORAGE_KEY, next)
+  }
+  listeners.forEach((notificar) => notificar())
+}
 
-  const toggle = () => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
+function subscribe(notificar: () => void) {
+  listeners.add(notificar)
+  return () => {
+    listeners.delete(notificar)
+  }
+}
 
-  return { theme, toggle, setTheme }
+function getSnapshot(): ThemeMode {
+  return theme
+}
+
+if (typeof window !== 'undefined') {
+  applyTheme(theme)
+}
+
+export function useTheme() {
+  const current = useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
+
+  const setTheme = useCallback((next: ThemeMode) => {
+    applyTheme(next)
+  }, [])
+
+  const toggle = useCallback(() => {
+    applyTheme(theme === 'dark' ? 'light' : 'dark')
+  }, [])
+
+  return { theme: current, toggle, setTheme }
 }

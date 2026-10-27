@@ -1,0 +1,261 @@
+.sa-app {
+  --sa-bg: #F7F9F8;
+  --sa-border: #E1E7E4;
+  --sa-card: #FFFFFF;
+  --sa-menta: #BEEBD3;
+  --sa-menta-soft: #EAF7F0;
+  --sa-on-menta: #22524A;
+  --sa-on-menta-soft: #1E3A31;
+  --sa-green: #3F6B58;
+  --sa-sky: #C9E3FC;
+  --sa-peach: #FFD9C6;
+  --sa-slate: #4A6075;
+  --sa-steel: #2C5A7A;
+  --sa-coffee: #7A4320;
+  --sa-field: #F0F2F1;
+  --sa-muted: #5F6663;
+  --sa-header: #E6EBE8;
+  --sa-avatar: #3F6B58;
+  --sa-control-bg: #F0F2F1;
+  --sa-pill: #FFFFFF;
+  --color-forest: #22524A;
+  --color-text-primary: #1A1C1B;
+  --sa-accent: #22524A;
+  --sa-on-accent: #FFFFFF;
+  --sa-overlay: rgba(30, 38, 34, 0.6);
+  --sa-modal-header: #F0F3F1;
+  --sa-modal-footer: #F0F3F0;
+  --sa-context: #EFF3F1;
+  --sa-chip-gray: #E6ECE8;
+  --sa-chip-gray-text: #4A524F;
+  --sa-input-border: #D5DDD9;
+  --sa-pauta-bg: #E3F4EA;
+  --sa-box: #EEF1EF;
+  --sa-rosa: #FFD6D6;
+  --sa-on-rosa: #B3261E;
+  --sa-danger: #C62828;
+  --sa-title: #1F4A3F;
+  --sa-bar-forest: #22524A;
+  --sa-bar-slate: #4A6075;
+  --sa-bar-coffee: #7A4320;
+  --sa-bar-gray: #6B7270;
+  --sa-confidencial: #EAF3EE;
+  --see-banner: #1F3B36;
+  --role-banner-bg: #1F4A3F;
+  --role-banner-fg: #FFFFFF;
+  --semaforo-verde-bg: #EAF7F0;
+  --semaforo-verde-fg: #22524A;
+  --semaforo-amarillo-bg: #FFF1E6;
+  --semaforo-amarillo-fg: #7A4320;
+  --semaforo-rojo-bg: #FDE8E8;
+  --semaforo-rojo-fg: #B3261E;
+  --qr-surface: #FFFFFF;
+  --qr-ink: #101312;
+  --sa-ring-track: #DCE7E1;
+  --sa-success-fg: #1F6B4F;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  font-family: var(--font-sans);
+  background-color: var(--sa-bg);
+  color: var(--color-text-primary);
+}
+
+.sa-app[data-theme='dark'] {
+  --sa-bg: #0F1513;
+  --sa-border: #2A3833;
+  --sa-card: #18211E;
+  --sa-menta: #1E4A3A;
+  --sa-menta-soft: #17362C;
+  --sa-on-menta: #DCEFE5;
+  --sa-on-menta-soft: #CDE8DC;
+  --sa-green: #6FBE9C;
+  --sa-sky: #1D3F5C;
+  --sa-peach: #5A3A2B;
+  --sa-slate: #9FC4E2;
+  --sa-steel: #9CC4E0;
+  --sa-coffee: #E7A981;
+  --sa-field: #202B27;
+  --sa-muted: #A7B3AE;
+  --sa-header: #202B27;
+  --sa-control-bg: #202B27;
+  --sa-pill: #2C3A34;
+  --sa-accent: #5FB08F;
+  --sa-on-accent: #0F1513;
+  --color-forest: #5FB08F;
+  --color-text-primary: #E8EFEC;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --sa-overlay: rgba(0, 0, 0, 0.65);
+  --sa-modal-header: #202B27;
+  --sa-modal-footer: #202B27;
+  --sa-context: #202B27;
+  --sa-chip-gray: #2C3A34;
+  --sa-chip-gray-text: #C7D2CD;
+  --sa-input-border: #3A4A44;
+  --sa-pauta-bg: #1E4A3A;
+  --sa-box: #202B27;
+  --sa-rosa: #4A2420;
+  --sa-on-rosa: #FFC2B8;
+  --sa-danger: #FF8A80;
+  --sa-title: #BFE9D6;
+  --sa-bar-forest: #6FBE9C;
+  --sa-bar-slate: #9FC4E2;
+  --sa-bar-coffee: #E7A981;
+  --sa-bar-gray: #A7B3AE;
+  --sa-confidencial: #17362C;
+  --see-banner: #14231F;
+  --role-banner-bg: #163830;
+  --role-banner-fg: #FFFFFF;
+  --semaforo-verde-bg: #14302A;
+  --semaforo-verde-fg: #7FD1AE;
+  --semaforo-amarillo-bg: #3A2A1A;
+  --semaforo-amarillo-fg: #F2B27A;
+  --semaforo-rojo-bg: #3A1B1B;
+  --semaforo-rojo-fg: #FF9A94;
+  --qr-surface: #FFFFFF;
+  --qr-ink: #101312;
+  --sa-ring-track: #2A3833;
+  --sa-success-fg: #8FDDB9;
+}
+
+.sa-app[data-contrast='high'] {
+  --sa-border: #1A1C1B;
+  --sa-muted: #1A1C1B;
+  --sa-field: #FFFFFF;
+  --sa-box: #FFFFFF;
+  --sa-card: #FFFFFF;
+  --sa-chip-gray: #FFFFFF;
+  --sa-input-border: #1A1C1B;
+  --sa-menta-soft: #EAF7F0;
+  --sa-on-menta: #0F2B25;
+  --sa-on-menta-soft: #0F2B25;
+  --sa-green: #22524A;
+  --sa-rosa: #FFFFFF;
+  --sa-on-rosa: #8A1C14;
+  --sa-danger: #B3261E;
+  --sa-title: #1A1C1B;
+  --sa-confidencial: #FFFFFF;
+  --semaforo-verde-bg: #FFFFFF;
+  --semaforo-verde-fg: #0F3B30;
+  --semaforo-amarillo-bg: #FFFFFF;
+  --semaforo-amarillo-fg: #5C2E12;
+  --semaforo-rojo-bg: #FFFFFF;
+  --semaforo-rojo-fg: #8A1C14;
+  --qr-surface: #FFFFFF;
+  --qr-ink: #000000;
+  --sa-ring-track: #FFFFFF;
+  --sa-success-fg: #0F3B30;
+}
+
+.sa-app[data-contrast='high'][data-theme='dark'] {
+  --sa-border: #FFFFFF;
+  --sa-muted: #FFFFFF;
+  --sa-field: #000000;
+  --sa-box: #000000;
+  --sa-card: #000000;
+  --sa-chip-gray: #000000;
+  --sa-input-border: #FFFFFF;
+  --sa-menta-soft: #000000;
+  --sa-on-menta: #FFFFFF;
+  --sa-on-menta-soft: #FFFFFF;
+  --sa-green: #9FD9C0;
+  --sa-rosa: #000000;
+  --sa-on-rosa: #FFC2B8;
+  --sa-danger: #FF8A80;
+  --sa-title: #FFFFFF;
+  --sa-confidencial: #000000;
+  --semaforo-verde-bg: #000000;
+  --semaforo-verde-fg: #9FE3C0;
+  --semaforo-amarillo-bg: #000000;
+  --semaforo-amarillo-fg: #FFC58F;
+  --semaforo-rojo-bg: #000000;
+  --semaforo-rojo-fg: #FFB0AA;
+  --qr-surface: #FFFFFF;
+  --qr-ink: #000000;
+  --sa-ring-track: #FFFFFF;
+  --sa-success-fg: #9FE3C0;
+}
+
+.sa-app input::placeholder {
+  color: var(--sa-muted);
+  opacity: 1;
+}
+
+.sa-app h1,
+.sa-app h2,
+.sa-app h3,
+.sa-app h4,
+.sa-app h5,
+.sa-app h6 {
+  font-family: var(--font-sans);
+}
+
+.padron-dato {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.padron-dato + .padron-dato::before {
+  content: '•';
+  color: var(--sa-muted);
+  margin-right: 0.375rem;
+}
+
+@media print {
+  .sa-app {
+    background: #ffffff;
+  }
+
+  .sa-no-print {
+    display: none !important;
+  }
+
+  .sa-print-only {
+    display: block !important;
+  }
+
+  .sa-print-only,
+  .sa-print-only * {
+    color: #000000 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .sa-print-only {
+    background: #ffffff !important;
+  }
+
+  .sa-print-main {
+    max-width: none;
+    padding: 0;
+  }
+
+  .sa-print-main h1 {
+    font-size: 22pt;
+  }
+
+  .sa-print-main h2 {
+    font-size: 20pt;
+  }
+
+  .sa-print-main h3 {
+    font-size: 18pt;
+  }
+
+  .sa-print-main p,
+  .sa-print-main span,
+  .sa-print-main li,
+  .sa-print-main h4,
+  .sa-print-main h5,
+  .sa-print-main h6 {
+    font-size: 14pt;
+    line-height: 1.5;
+  }
+
+  .sa-print-main article,
+  .sa-print-main section {
+    break-inside: avoid;
+  }
+}

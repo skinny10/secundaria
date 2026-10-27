@@ -1,15 +1,54 @@
-﻿import './ServiciosAcademicos/shared/styles/theme.css'
-import { useThemeMode } from './ServiciosAcademicos/shared/hooks/useThemeMode'
-import { PsicologiaPage } from './Psicologia/pages/PsicologiaPage'
+import './styles/sa-theme.css'
+import { useEffect, useState } from 'react'
+import { CanalizacionesPage } from './Psicologia/Canalizaciones/pages/CanalizacionesPage'
+import { ConcentradoPage } from './Psicologia/Concentrado/pages/ConcentradoPage'
+import { DashboardPage } from './Psicologia/Dashboard/pages/DashboardPage'
+import { ExpedientePage } from './Psicologia/Expediente/pages/ExpedientePage'
+import { ReportesPage } from './Psicologia/Reportes/pages/ReportesPage'
+import { AltaEstudiantePage } from './ServiciosAcademicos/AltaEstudiante/pages/AltaEstudiantePage'
+import { CotejoDocumentacionPage } from './ServiciosAcademicos/CotejoDocumentacion/pages/CotejoDocumentacionPage'
+import { EstadisticasPage } from './ServiciosAcademicos/Estadisticas/pages/EstadisticasPage'
+import { ExpedienteAdministrativoPage } from './ServiciosAcademicos/Expediente/pages/ExpedienteAdministrativoPage'
+import { FichaEscolarPage } from './ServiciosAcademicos/FichaEscolar/pages/FichaEscolarPage'
+import { PadronGeneralPage } from './ServiciosAcademicos/PadronGeneral/pages/PadronGeneralPage'
+import { TransferenciasPage } from './ServiciosAcademicos/Transferencias/pages/TransferenciasPage'
+
+function leerHash() {
+  return window.location.hash.replace('#', '')
+}
 
 function App() {
-  const { theme } = useThemeMode()
+  const [vista, setVista] = useState(leerHash)
 
-  return (
-    <div className='sa-app min-h-screen bg-[var(--sa-bg)] text-[var(--color-text-primary)]' data-theme={theme}>
-      <PsicologiaPage />
-    </div>
-  )
+  useEffect(() => {
+    const onHashChange = () => setVista(leerHash())
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+
+  const ruta = vista.split('?')[0]
+
+  if (ruta === 'servicios-academicos' || ruta === 'servicios-academicos/padron') {
+    return <PadronGeneralPage />
+  }
+  if (
+    ruta === 'servicios-academicos/alta' ||
+    ruta.startsWith('servicios-academicos/alta/')
+  ) {
+    return <AltaEstudiantePage />
+  }
+  if (ruta === 'servicios-academicos/cotejo') return <CotejoDocumentacionPage />
+  if (ruta === 'servicios-academicos/transferencias') return <TransferenciasPage />
+  if (ruta === 'servicios-academicos/estadisticas') return <EstadisticasPage />
+  if (ruta === 'servicios-academicos/expediente') return <ExpedienteAdministrativoPage />
+  if (ruta === 'servicios-academicos/ficha') return <FichaEscolarPage />
+  if (ruta.startsWith('servicios-academicos')) return <PadronGeneralPage />
+
+  if (ruta === 'reportes') return <ReportesPage />
+  if (ruta === 'expediente') return <ExpedientePage />
+  if (ruta === 'canalizaciones') return <CanalizacionesPage />
+  if (ruta === 'concentrado') return <ConcentradoPage />
+  return <DashboardPage />
 }
 
 export default App

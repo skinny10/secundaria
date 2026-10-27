@@ -54,7 +54,7 @@ export const loginContent = {
     inclusionQuote: {
       title: "ACOMPAÑAMIENTO INTERDISCIPLINARIO",
       quote:
-        "Comunidad Educativa Inclusiva • Espacio seguro de vinculación interdisciplinaria para Maestros, Servicios Académicos, Psicología (SEE) y Prefectura.",
+        "Comunidad Educativa Inclusiva • Espacio seguro de vinculación interdisciplinaria para Maestros, Psicología (SEE) y Prefectura.",
       chips: [
         "Planes de Ajuste Razonable (DUA)",
         "Bitácora Socioemocional",
