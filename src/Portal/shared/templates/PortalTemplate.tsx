@@ -53,7 +53,7 @@ export function PortalTemplate({
     >
       <RoleBanner roleKey={roleKey} rol={rol} vista={vista} sistema={sistemaBanner} />
 
-      <div className='sa-no-print grid w-full grid-cols-1 lg:grid-cols-[208px_minmax(0,1fr)]'>
+      <div className='sa-no-print grid w-full grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] [1100px]:grid-cols-[280px_minmax(0,1fr)]'>
         <div className={menuAbierto ? 'block' : 'hidden lg:block'}>
           <SidebarSEE
             roleKey={roleKey}
@@ -63,7 +63,7 @@ export function PortalTemplate({
           />
         </div>
 
-        <main className='sa-print-main flex min-w-0 flex-col gap-3 px-3 py-3 lg:px-[14px] lg:py-3'>
+        <main className='sa-print-main flex min-w-0 flex-col gap-5 px-4 py-4 lg:px-6 lg:py-5'>
           <TopBarSEE
             roleKey={roleKey}
             isDark={isDark}

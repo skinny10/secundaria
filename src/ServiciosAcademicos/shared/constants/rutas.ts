@@ -20,6 +20,9 @@ const segmentos: Record<ModuloServicios, string> = {
 }
 
 export function rutaServicios(modulo: ModuloServicios, alumno?: string): string {
+  if (modulo === 'transferencias' && alumno) {
+    return `#servicios-academicos/transferencias/nueva?alumno=${encodeURIComponent(alumno)}`
+  }
   const base = `#servicios-academicos/${segmentos[modulo]}`
   return alumno ? `${base}?alumno=${encodeURIComponent(alumno)}` : base
 }

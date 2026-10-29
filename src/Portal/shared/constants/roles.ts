@@ -1,6 +1,54 @@
 import type { RoleConfig, RoleKey } from '../types'
 
 export const roles: Record<RoleKey, RoleConfig> = {
+  administrador: {
+    key: 'administrador',
+    portal: 'INCLUSIÓN ESCOLAR',
+    bannerRol: 'ADMINISTRADOR DEL SISTEMA',
+    bannerIcon: 'shield',
+    bannerToken: '--role-banner-bg',
+    system: 'Sistema Oficial SEP',
+    sidebarLabel: 'ADMINISTRACIÓN',
+    sidebarAria: 'Menú de Administración del Sistema',
+    searchPlaceholder: 'Buscar usuarios, expedientes o roles',
+    homeKey: 'directorio',
+    user: {
+      name: 'Lic. Roberto Tovilla Ruiz',
+      role: 'Director / Administrador General',
+      initials: 'RT',
+    },
+    navItems: [
+      {
+        key: 'directorio',
+        label: 'Directorio de Personal y Cuentas',
+        icon: 'users',
+        hash: '#administrador/directorio',
+      },
+      {
+        key: 'roles',
+        label: 'Roles y Permisos',
+        icon: 'shield-check',
+        hash: '#administrador/roles',
+      },
+      {
+        key: 'bitacora',
+        label: 'Bitácora de Accesos y Seguridad',
+        icon: 'file-text',
+        hash: '#administrador/bitacora',
+      },
+      {
+        key: 'configuracion',
+        label: 'Configuración de Plantel',
+        icon: 'sliders',
+        hash: '#administrador/configuracion',
+      },
+    ],
+    footer: {
+      type: 'norma',
+      norma: 'Sesión Segura SSL',
+      ciclo: '2024-2025',
+    },
+  },
   psicologia: {
     key: 'psicologia',
     portal: 'Psicología & SEE',
@@ -75,21 +123,12 @@ export const roles: Record<RoleKey, RoleConfig> = {
         label: 'Cotejo y Documentación',
         icon: 'clipboard-check',
         hash: '#servicios-academicos/cotejo',
-        proximamente: true,
       },
       {
         key: 'transferencias',
         label: 'Transferencias SEE',
         icon: 'share',
         hash: '#servicios-academicos/transferencias',
-        proximamente: true,
-      },
-      {
-        key: 'estadisticas',
-        label: 'Estadísticas Escolares',
-        icon: 'trending-up',
-        hash: '#servicios-academicos/estadisticas',
-        proximamente: true,
       },
     ],
     footer: {

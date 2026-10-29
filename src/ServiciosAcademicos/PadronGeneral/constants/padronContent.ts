@@ -148,7 +148,8 @@ export const accionesPorEstatus: Record<EstatusExpediente, AccionEstudiante[]> =
       etiqueta: 'Transferir a SEE',
       icon: 'share',
       tono: 'forest',
-      tipo: 'transferir',
+      tipo: 'navegar',
+      destino: 'transferencias',
     },
   ],
   cotejo_pendiente: [

@@ -62,6 +62,7 @@ export type DestinoModulo =
   | 'cotejo'
   | 'ficha'
   | 'alta'
+  | 'transferencias'
 
 export interface AccionEstudiante {
   id: string

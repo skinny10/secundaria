@@ -1,6 +1,6 @@
 import type { IconName } from '../../../utils/types'
 
-export type RoleKey = 'psicologia' | 'servicios_academicos'
+export type RoleKey = 'psicologia' | 'servicios_academicos' | 'administrador'
 
 export type SidebarKey =
   | 'dashboard'
@@ -13,6 +13,10 @@ export type SidebarKey =
   | 'cotejo'
   | 'transferencias'
   | 'estadisticas'
+  | 'directorio'
+  | 'roles'
+  | 'bitacora'
+  | 'configuracion'
 
 export type TonoChip =
   | 'menta'

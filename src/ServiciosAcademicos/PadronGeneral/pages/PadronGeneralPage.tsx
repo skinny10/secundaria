@@ -4,7 +4,6 @@ import { roles } from '../../../Portal/shared/constants/roles'
 import type { SidebarKey } from '../../../Portal/shared/types'
 import { ServiciosAcademicosTemplate } from '../../shared/templates/ServiciosAcademicosTemplate'
 import { rutaAccion } from '../../shared/constants/rutas'
-import { DialogoTransferencia } from '../molecules/DialogoTransferencia'
 import { PaginacionPadron } from '../molecules/PaginacionPadron'
 import { EncabezadoPadron } from '../organisms/EncabezadoPadron'
 import { FiltrosPadron } from '../organisms/FiltrosPadron'
@@ -22,12 +21,11 @@ export function PadronGeneralPage() {
     const idsAltas = new Set(altas.map((estudiante) => estudiante.id))
     return [...altas, ...estudiantes.filter((estudiante) => !idsAltas.has(estudiante.id))]
   }, [altas])
-  const { estudiantes: conTransferencias, transferir, estaTransferido } =
+  const { estudiantes: conTransferencias, estaTransferido } =
     useTransferenciasSEE(estudiantesConAltas)
   const filtros = usePadronFiltros(conTransferencias)
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [seleccionado, setSeleccionado] = useState<Estudiante | null>(null)
   const [aviso, setAviso] = useState<string | null>(null)
 
   useEffect(() => {
@@ -57,14 +55,12 @@ export function PadronGeneralPage() {
     window.setTimeout(() => setCargando(false), 450)
   }, [])
 
-  const cerrarDialogo = useCallback(() => setSeleccionado(null), [])
-
-  const confirmarTransferencia = (motivo: string, notas: string) => {
-    if (!seleccionado) return
-    transferir(seleccionado, motivo, notas)
-    setSeleccionado(null)
-    setAviso(dialogoTransferencia.confirmacion)
-  }
+  useEffect(() => {
+    const hash = window.location.hash
+    if (hash.includes('transferencias') && !hash.includes('nueva')) {
+      setAviso('Seleccione un alumno y use «Transferir a SEE»')
+    }
+  }, [])
 
   return (
     <ServiciosAcademicosTemplate
@@ -119,7 +115,9 @@ export function PadronGeneralPage() {
         onReintentar={reintentar}
         onLimpiar={filtros.limpiar}
         onNavegar={navegarModulo}
-        onTransferir={setSeleccionado}
+        onTransferir={(estudiante) => {
+          window.location.hash = rutaAccion('transferencias', estudiante.id)
+        }}
         estaTransferido={estaTransferido}
       />
 
@@ -135,14 +133,7 @@ export function PadronGeneralPage() {
         />
       ) : null}
 
-      {seleccionado ? (
-        <DialogoTransferencia
-          key={seleccionado.id}
-          estudiante={seleccionado}
-          onCerrar={cerrarDialogo}
-          onConfirmar={confirmarTransferencia}
-        />
-      ) : null}
+
     </ServiciosAcademicosTemplate>
   )
 }

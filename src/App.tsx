@@ -12,6 +12,10 @@ import { ExpedienteAdministrativoPage } from './ServiciosAcademicos/Expediente/p
 import { FichaEscolarPage } from './ServiciosAcademicos/FichaEscolar/pages/FichaEscolarPage'
 import { PadronGeneralPage } from './ServiciosAcademicos/PadronGeneral/pages/PadronGeneralPage'
 import { TransferenciasPage } from './ServiciosAcademicos/Transferencias/pages/TransferenciasPage'
+import { DirectorioPersonalPage } from './Administrador/DirectorioPersonal/pages/DirectorioPersonalPage'
+import { AltaColaboradorPage } from './Administrador/AltaColaborador/pages/AltaColaboradorPage'
+import { RolesPermisosPage } from './Administrador/RolesPermisos/pages/RolesPermisosPage'
+import { BitacoraAuditoriaPage } from './Administrador/BitacoraAuditoria/pages/BitacoraAuditoriaPage'
 
 function leerHash() {
   return window.location.hash.replace('#', '')
@@ -28,6 +32,22 @@ function App() {
 
   const ruta = vista.split('?')[0]
 
+  if (ruta === 'administrador' || ruta === 'administrador/directorio') {
+    return <DirectorioPersonalPage />
+  }
+  if (ruta === 'administrador/alta' || ruta === 'administrador/nuevo' || ruta === 'administrador/registro') {
+    return <AltaColaboradorPage />
+  }
+  if (ruta === 'administrador/roles') {
+    return <RolesPermisosPage />
+  }
+  if (ruta === 'administrador/bitacora') {
+    return <BitacoraAuditoriaPage />
+  }
+  if (ruta === 'administrador/configuracion') {
+    return <DirectorioPersonalPage />
+  }
+
   if (ruta === 'servicios-academicos' || ruta === 'servicios-academicos/padron') {
     return <PadronGeneralPage />
   }
@@ -37,8 +57,18 @@ function App() {
   ) {
     return <AltaEstudiantePage />
   }
-  if (ruta === 'servicios-academicos/cotejo') return <CotejoDocumentacionPage />
-  if (ruta === 'servicios-academicos/transferencias') return <TransferenciasPage />
+  if (
+    ruta === 'servicios-academicos/cotejo' ||
+    ruta.startsWith('servicios-academicos/cotejo/')
+  ) {
+    return <CotejoDocumentacionPage />
+  }
+  if (
+    ruta === 'servicios-academicos/transferencias' ||
+    ruta.startsWith('servicios-academicos/transferencias/')
+  ) {
+    return <TransferenciasPage />
+  }
   if (ruta === 'servicios-academicos/estadisticas') return <EstadisticasPage />
   if (ruta === 'servicios-academicos/expediente') return <ExpedienteAdministrativoPage />
   if (ruta === 'servicios-academicos/ficha') return <FichaEscolarPage />

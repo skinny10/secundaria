@@ -42,11 +42,17 @@ export function AccionesEstudiante({
                 : accion.etiqueta
             }
             onClick={() => {
-              if (esTransferencia) {
+              if (esTransferencia && accion.destino !== 'transferencias') {
                 onTransferir(estudiante)
                 return
               }
-              if (accion.destino) onNavegar(accion.destino, estudiante)
+              if (accion.destino) {
+                onNavegar(accion.destino, estudiante)
+                return
+              }
+              if (esTransferencia) {
+                onTransferir(estudiante)
+              }
             }}
             className={cn(
               'inline-flex min-h-[44px] items-center gap-2 rounded-xl px-3.5 text-[13px] font-bold',
