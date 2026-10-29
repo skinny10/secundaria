@@ -16,6 +16,7 @@ import { DirectorioPersonalPage } from './Administrador/DirectorioPersonal/pages
 import { AltaColaboradorPage } from './Administrador/AltaColaborador/pages/AltaColaboradorPage'
 import { RolesPermisosPage } from './Administrador/RolesPermisos/pages/RolesPermisosPage'
 import { BitacoraAuditoriaPage } from './Administrador/BitacoraAuditoria/pages/BitacoraAuditoriaPage'
+import { ConfiguracionPlantelPage } from './Administrador/ConfiguracionPlantel/pages/ConfiguracionPlantelPage'
 
 function leerHash() {
   return window.location.hash.replace('#', '')
@@ -45,7 +46,7 @@ function App() {
     return <BitacoraAuditoriaPage />
   }
   if (ruta === 'administrador/configuracion') {
-    return <DirectorioPersonalPage />
+    return <ConfiguracionPlantelPage />
   }
 
   if (ruta === 'servicios-academicos' || ruta === 'servicios-academicos/padron') {

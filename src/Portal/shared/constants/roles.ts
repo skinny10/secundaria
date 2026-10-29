@@ -10,7 +10,7 @@ export const roles: Record<RoleKey, RoleConfig> = {
     system: 'Sistema Oficial SEP',
     sidebarLabel: 'ADMINISTRACIÓN',
     sidebarAria: 'Menú de Administración del Sistema',
-    searchPlaceholder: 'Buscar usuarios, expedientes o roles',
+    searchPlaceholder: 'Buscar usuario, rol o correo…',
     homeKey: 'directorio',
     user: {
       name: 'Lic. Roberto Tovilla Ruiz',

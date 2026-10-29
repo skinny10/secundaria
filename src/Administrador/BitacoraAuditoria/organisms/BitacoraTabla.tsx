@@ -1,6 +1,7 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Icon } from '../../../utils/atoms/Icon'
 import { cn } from '../../../utils/cn'
+import { eventosConfiguracion, suscribirAuditoria } from '../../ConfiguracionPlantel/services/auditoriaService'
 import { eventos } from '../constants/eventos'
 
 const hoverCelda =
@@ -11,6 +12,12 @@ const hoverIcono = 'shrink-0 transition-transform duration-200 group-hover/celda
 
 export function BitacoraTabla() {
   const [expandido, setExpandido] = useState<string | null>(null)
+  const [dinamicos, setDinamicos] = useState(eventosConfiguracion)
+
+  useEffect(() => suscribirAuditoria(() => setDinamicos(eventosConfiguracion())), [])
+
+  const registros = [...dinamicos, ...eventos]
+
   return (
     <section className='rounded-2xl border border-[var(--sa-border)] bg-[var(--sa-card)] shadow-sm'>
       <header className='flex flex-wrap items-center justify-between gap-4 border-b border-[var(--sa-border)] px-8 py-6'>
@@ -20,7 +27,7 @@ export function BitacoraTabla() {
           </div>
           <div>
             <h2 className='text-[34px] font-extrabold text-[var(--sa-text)]'>Registros Forenses en Vivo</h2>
-            <p className='text-[20px] text-[var(--sa-muted)]'>5 eventos desplegados</p>
+            <p className='text-[20px] text-[var(--sa-muted)]'>{registros.length} eventos desplegados</p>
           </div>
         </div>
         <div className='flex items-center gap-2 text-[19px] font-semibold text-[var(--color-forest)]'>
@@ -41,7 +48,7 @@ export function BitacoraTabla() {
             </tr>
           </thead>
           <tbody>
-            {eventos.map((e) => {
+            {registros.map((e) => {
               const critica = e.severidad === 'critica'
               return (
                 <Fragment key={e.id}>
