@@ -3,6 +3,8 @@ import type { RegistroCanalizacion } from '../types'
 
 interface FichaClinicaProps {
   seleccionado: RegistroCanalizacion
+  onFirmarRecibido?: () => void
+  firmando?: boolean
 }
 
 const planOperativo = [
@@ -11,7 +13,7 @@ const planOperativo = [
   'Generar Ficha de Adaptación Curricular y DUA',
 ]
 
-export function FichaClinica({ seleccionado }: FichaClinicaProps) {
+export function FichaClinica({ seleccionado, onFirmarRecibido, firmando = false }: FichaClinicaProps) {
   const iniciales = `${seleccionado.nombre.trim().charAt(0)}${seleccionado.apellidos
     .trim()
     .charAt(0)}`.toUpperCase()
@@ -129,9 +131,14 @@ export function FichaClinica({ seleccionado }: FichaClinicaProps) {
           <Icon name='book-open' size={16} color='currentColor' />
           Abrir Expediente
         </button>
-        <button className='inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-[var(--sa-border)] bg-[var(--sa-field)] px-3 text-[14.5px] font-bold hover:brightness-95'>
+        <button
+          type='button'
+          onClick={onFirmarRecibido}
+          disabled={!onFirmarRecibido || firmando}
+          className='inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-[var(--sa-border)] bg-[var(--sa-field)] px-3 text-[14.5px] font-bold hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60'
+        >
           <Icon name='pen' size={16} color='currentColor' />
-          Firmar Recibido
+          {firmando ? 'Firmando…' : seleccionado.estado === 'RECIBIDO' ? 'Recibido' : 'Firmar Recibido'}
         </button>
       </div>
       <div className='rounded-lg bg-[var(--sa-field)] p-2 text-center text-[13px] text-[var(--sa-muted)]'>

@@ -1,3 +1,4 @@
+import { cerrarSesion } from '../../../Login/services/authService'
 import { Icon } from '../../../utils/atoms/Icon'
 import { cn } from '../../../utils/cn'
 import { app, navItems } from '../constants/navigation'
@@ -59,6 +60,15 @@ export function Sidebar({ open, activeId, onNavigate, onClose }: SidebarProps) {
             ))}
           </ul>
         </nav>
+
+        <button
+          type="button"
+          onClick={cerrarSesion}
+          className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-[var(--sa-border)] bg-[var(--sa-field)] px-3 text-sm font-bold hover:brightness-95"
+        >
+          <Icon name="arrow-left" size={16} color="currentColor" />
+          Cerrar sesión
+        </button>
 
         <PrivacyBox />
       </aside>

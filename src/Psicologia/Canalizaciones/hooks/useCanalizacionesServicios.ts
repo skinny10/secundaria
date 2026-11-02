@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { mapAuthError } from '../../../Login/services/authService'
+import { listarCanalizacionesApi } from '../services/canalizacionesApi'
 import {
   CANALIZACIONES_ACTUALIZADAS_EVENT,
   CANALIZACIONES_SERVICIOS_STORAGE_KEY,
@@ -67,9 +69,31 @@ function leerCanalizacionesExternas(): RegistroCanalizacion[] {
   }
 }
 
-export function useCanalizacionesServicios(): RegistroCanalizacion[] {
+export function useCanalizacionesServicios() {
   const [registros, setRegistros] = useState<RegistroCanalizacion[]>(leerCanalizacionesExternas)
   const [registrosAlta, setRegistrosAlta] = useState<RegistroCanalizacion[]>([])
+  const [registrosApi, setRegistrosApi] = useState<RegistroCanalizacion[]>([])
+  const [cargando, setCargando] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const cargarApi = useCallback(async (signal?: AbortSignal) => {
+    setCargando(true)
+    setError(null)
+    try {
+      const datos = await listarCanalizacionesApi(signal)
+      if (!signal?.aborted) setRegistrosApi(datos)
+    } catch (err) {
+      if (!signal?.aborted) setError(mapAuthError(err))
+    } finally {
+      if (!signal?.aborted) setCargando(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    const controller = new AbortController()
+    void cargarApi(controller.signal)
+    return () => controller.abort()
+  }, [cargarApi])
 
   useEffect(() => {
     let activo = true
@@ -98,5 +122,10 @@ export function useCanalizacionesServicios(): RegistroCanalizacion[] {
     }
   }, [])
 
-  return [...registrosAlta, ...registros]
+  return {
+    registros: [...registrosApi, ...registrosAlta, ...registros],
+    cargando,
+    error,
+    recargar: () => cargarApi(),
+  }
 }

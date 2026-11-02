@@ -1,3 +1,4 @@
+import { getSession } from '../../../Login/services/authService'
 import { Icon } from '../../../utils/atoms/Icon'
 import { roles } from '../constants/roles'
 import type { RoleKey } from '../types'
@@ -22,7 +23,20 @@ export function TopBarSEE({
   placeholder,
 }: TopBarSEEProps) {
   const config = roles[roleKey]
-  const usuario = config.user
+  const sesion = getSession()
+  const usuario = sesion
+    ? {
+        ...config.user,
+        name: sesion.user.fullName,
+        role: sesion.user.email,
+        initials: sesion.user.fullName
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((parte) => parte.charAt(0).toUpperCase())
+          .join(''),
+      }
+    : config.user
   const placeholderVisible = placeholder ?? config.searchPlaceholder
 
   return (

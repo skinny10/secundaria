@@ -1,6 +1,15 @@
-interface DatosPersonalesFormProps {}
+export interface DatosPersonales {
+  nombres: string
+  primerApellido: string
+  segundoApellido: string
+}
 
-export function DatosPersonalesForm({}: DatosPersonalesFormProps) {
+interface DatosPersonalesFormProps {
+  valores: DatosPersonales
+  onCambiar: (campo: keyof DatosPersonales, valor: string) => void
+}
+
+export function DatosPersonalesForm({ valores, onCambiar }: DatosPersonalesFormProps) {
   return (
     <section className='rounded-2xl border border-[var(--sa-border)] bg-[var(--sa-card)] shadow-sm'>
       <header className='flex items-center gap-4 border-b border-[var(--sa-border)] px-8 py-6'>
@@ -10,15 +19,15 @@ export function DatosPersonalesForm({}: DatosPersonalesFormProps) {
       <div className='grid gap-5 px-8 py-6 sm:grid-cols-2'>
         <div className='flex flex-col gap-2'>
           <label className='text-[20px] font-semibold'>Nombre(s) *</label>
-          <input placeholder='Ej. Ana María' className='h-16 rounded-xl border border-[var(--sa-border)] px-4 text-[22px]' />
+          <input value={valores.nombres} onChange={(e) => onCambiar('nombres', e.target.value)} placeholder='Ej. Ana María' className='h-16 rounded-xl border border-[var(--sa-border)] px-4 text-[22px]' />
         </div>
         <div className='flex flex-col gap-2'>
           <label className='text-[20px] font-semibold'>Primer Apellido *</label>
-          <input placeholder='Ej. López' className='h-16 rounded-xl border border-[var(--sa-border)] px-4 text-[22px]' />
+          <input value={valores.primerApellido} onChange={(e) => onCambiar('primerApellido', e.target.value)} placeholder='Ej. López' className='h-16 rounded-xl border border-[var(--sa-border)] px-4 text-[22px]' />
         </div>
         <div className='flex flex-col gap-2'>
           <label className='text-[20px] font-semibold'>Segundo Apellido</label>
-          <input placeholder='Ej. Ramírez' className='h-16 rounded-xl border border-[var(--sa-border)] px-4 text-[22px]' />
+          <input value={valores.segundoApellido} onChange={(e) => onCambiar('segundoApellido', e.target.value)} placeholder='Ej. Ramírez' className='h-16 rounded-xl border border-[var(--sa-border)] px-4 text-[22px]' />
         </div>
         <div className='flex flex-col gap-2'>
           <label className='text-[20px] font-semibold'>CURP Registrada *</label>

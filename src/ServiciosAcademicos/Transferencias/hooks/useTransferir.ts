@@ -8,7 +8,7 @@ import {
   transferenciasContent,
 } from '../constants/transferenciasContent'
 import type { DatosAlumnoTransferencia, MotivoTransferencia, Transferencia, UrgenciaTransferencia } from '../types'
-import { estudiantes } from '../../PadronGeneral/constants/padronData'
+import { buscarEstudiante } from '../../shared/services/estudiantesApi'
 import { leerCanalizacionesServicios } from '../../shared/services/canalizacionesStorage'
 
 interface UseTransferirParams {
@@ -39,7 +39,7 @@ export function useTransferir({ alumnoId }: UseTransferirParams) {
         }
         return
       }
-      const encontrado = estudiantes.find((e) => e.id === alumnoId)
+      const encontrado = await buscarEstudiante(alumnoId).catch(() => undefined)
       if (!encontrado) {
         if (activo) {
           setAlumno(null)

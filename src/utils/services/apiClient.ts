@@ -12,6 +12,23 @@ export class ApiError extends Error {
 
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api'
 
+export const SESSION_STORAGE_KEY = 'nexusedu:session'
+export const SESSION_EXPIRED_EVENT = 'nexusedu:session-expired'
+
+function leerToken(): string | null {
+  if (typeof window === 'undefined') return null
+  const raw =
+    window.localStorage.getItem(SESSION_STORAGE_KEY) ??
+    window.sessionStorage.getItem(SESSION_STORAGE_KEY)
+  if (!raw) return null
+  try {
+    const parsed = JSON.parse(raw) as { token?: unknown }
+    return typeof parsed.token === 'string' ? parsed.token : null
+  } catch {
+    return null
+  }
+}
+
 const REQUEST_TIMEOUT_MS = 15000
 
 interface RequestOptions {
@@ -19,6 +36,7 @@ interface RequestOptions {
   body?: unknown
   signal?: AbortSignal
   headers?: Record<string, string>
+  auth?: boolean
 }
 
 interface ApiErrorBody {
@@ -32,7 +50,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const { method = 'GET', body, signal, headers } = options
+  const { method = 'GET', body, signal, headers, auth = true } = options
+  const token = auth ? leerToken() : null
 
   const controller = new AbortController()
   const timeoutId = window.setTimeout(() => {
@@ -51,9 +70,9 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     const response = await fetch(`${API_BASE_URL}${path}`, {
       method,
       signal: controller.signal,
-      credentials: 'include',
       headers: {
         Accept: 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
         ...headers,
       },
@@ -64,6 +83,12 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     const payload: unknown = contentType.includes('application/json')
       ? await response.json().catch(() => null)
       : null
+
+    if (response.status === 401 && token) {
+      window.localStorage.removeItem(SESSION_STORAGE_KEY)
+      window.sessionStorage.removeItem(SESSION_STORAGE_KEY)
+      window.dispatchEvent(new CustomEvent(SESSION_EXPIRED_EVENT))
+    }
 
     if (!response.ok) {
       const errorBody = (isRecord(payload) ? payload : {}) as ApiErrorBody

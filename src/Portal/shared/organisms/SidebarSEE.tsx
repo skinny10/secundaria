@@ -1,3 +1,4 @@
+import { cerrarSesion } from '../../../Login/services/authService'
 import { Icon } from '../../../utils/atoms/Icon'
 import { cn } from '../../../utils/cn'
 import { roles } from '../constants/roles'
@@ -105,6 +106,14 @@ export function SidebarSEE({
       </div>
 
       <div className='mt-auto flex flex-col gap-2'>
+        <button
+          type='button'
+          onClick={cerrarSesion}
+          className='inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-[var(--sa-border)] bg-[var(--sa-field)] px-3 text-[14px] font-bold hover:brightness-95'
+        >
+          <Icon name='arrow-left' size={16} color='currentColor' />
+          Cerrar sesión
+        </button>
         {config.footer.type === 'norma' ? (
           <>
             <span className='inline-flex items-center gap-2 rounded-lg bg-[var(--sa-field)] px-2.5 py-2 text-[11px] font-bold text-[var(--sa-muted)]' style={{ overflowWrap: 'normal', wordBreak: 'normal', hyphens: 'manual' }}>

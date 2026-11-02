@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Icon } from '../../../utils/atoms/Icon'
 import { roles } from '../../../Portal/shared/constants/roles'
 import type { SidebarKey } from '../../../Portal/shared/types'
@@ -8,30 +8,27 @@ import { PaginacionPadron } from '../molecules/PaginacionPadron'
 import { EncabezadoPadron } from '../organisms/EncabezadoPadron'
 import { FiltrosPadron } from '../organisms/FiltrosPadron'
 import { ListaEstudiantes } from '../organisms/ListaEstudiantes'
-import { calcularKpis, estudiantes } from '../constants/padronData'
+import { calcularKpis, claveGrupo } from '../constants/padronData'
 import { dialogoTransferencia } from '../constants/padronContent'
 import { usePadronFiltros } from '../hooks/usePadronFiltros'
 import { useTransferenciasSEE } from '../hooks/useTransferenciasSEE'
-import { useEstudiantesAlta } from '../../AltaEstudiante/hooks/useEstudiantesAlta'
+import { useEstudiantesPadron } from '../../shared/hooks/useEstudiantesPadron'
+import { filtrosPadron } from '../constants/padronContent'
 import type { DestinoModulo, Estudiante } from '../types'
 
 export function PadronGeneralPage() {
-  const { estudiantes: altas } = useEstudiantesAlta()
-  const estudiantesConAltas = useMemo(() => {
-    const idsAltas = new Set(altas.map((estudiante) => estudiante.id))
-    return [...altas, ...estudiantes.filter((estudiante) => !idsAltas.has(estudiante.id))]
-  }, [altas])
+  const { estudiantes: estudiantesApi, cargando, error, recargar } = useEstudiantesPadron()
   const { estudiantes: conTransferencias, estaTransferido } =
-    useTransferenciasSEE(estudiantesConAltas)
+    useTransferenciasSEE(estudiantesApi)
   const filtros = usePadronFiltros(conTransferencias)
-  const [cargando, setCargando] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const [aviso, setAviso] = useState<string | null>(null)
-
-  useEffect(() => {
-    const timeoutId = window.setTimeout(() => setCargando(false), 450)
-    return () => window.clearTimeout(timeoutId)
-  }, [])
+  const opcionesGrupo = useMemo(() => {
+    const claves = Array.from(new Set(conTransferencias.map(claveGrupo))).sort()
+    return [
+      { value: '', label: filtrosPadron.gradoTodos },
+      ...claves.map((clave) => ({ value: clave, label: clave })),
+    ]
+  }, [conTransferencias])
 
   const kpis = useMemo(() => calcularKpis(conTransferencias), [conTransferencias])
   const pendientesActivo = filtros.estatus === 'cotejo_pendiente'
@@ -49,11 +46,9 @@ export function PadronGeneralPage() {
     filtros.setEstatus(pendientesActivo ? '' : 'cotejo_pendiente')
   }
 
-  const reintentar = useCallback(() => {
-    setError(null)
-    setCargando(true)
-    window.setTimeout(() => setCargando(false), 450)
-  }, [])
+  const reintentar = () => {
+    void recargar()
+  }
 
   useEffect(() => {
     const hash = window.location.hash
@@ -83,6 +78,7 @@ export function PadronGeneralPage() {
         onTexto={filtros.setTexto}
         onGrado={filtros.setGrado}
         onEstatus={filtros.setEstatus}
+        opciones={opcionesGrupo}
         onAlta={() => {
           window.location.hash = '#servicios-academicos/alta'
         }}

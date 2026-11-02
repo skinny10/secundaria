@@ -204,9 +204,10 @@ export const textosLista = {
   vacioBoton: 'Limpiar filtros',
   fotoAlt: (nombre: string) => `Fotografía de ${nombre}`,
   matricula: (matricula: string) => `MATRÍCULA: ${matricula}`,
-  curp: (curp: string) => `CURP: ${curp}`,
-  tutor: (nombre: string, parentesco: string) => `Tutor: ${nombre} (${parentesco})`,
-  edad: (edad: number) => `${edad} Años cumplidos`,
+  curp: (curp: string) => `CURP: ${curp || 'Sin registrar'}`,
+  tutor: (nombre: string, parentesco: string) =>
+    nombre ? `Tutor: ${nombre} (${parentesco})` : 'Tutor: Sin registrar',
+  edad: (edad: number) => (edad > 0 ? `${edad} Años cumplidos` : 'Edad sin registrar'),
   gradoGrupo: (grado: string, grupo: string, turno: string) =>
     `${grado} ${grupo} ${turno}`,
   documentacion: {

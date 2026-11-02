@@ -11,6 +11,7 @@ interface FiltrosPadronProps {
   onGrado: (valor: string) => void
   onEstatus: (valor: string) => void
   onAlta: () => void
+  opciones?: OpcionFiltro[]
 }
 
 export function FiltrosPadron({
@@ -21,6 +22,7 @@ export function FiltrosPadron({
   onGrado,
   onEstatus,
   onAlta,
+  opciones = opcionesGrado,
 }: FiltrosPadronProps) {
   return (
     <section
@@ -73,7 +75,7 @@ export function FiltrosPadron({
             onChange={(event) => onGrado(event.target.value)}
             className='h-11 w-full min-w-0 rounded-xl border border-[var(--sa-input-border)] bg-[var(--sa-card)] px-3 text-[13px] font-semibold'
           >
-            {opcionesGrado.map((opcion: OpcionFiltro) => (
+            {opciones.map((opcion: OpcionFiltro) => (
               <option key={opcion.value || 'todos'} value={opcion.value}>
                 {opcion.label}
               </option>

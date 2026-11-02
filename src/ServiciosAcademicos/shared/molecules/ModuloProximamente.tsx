@@ -1,7 +1,8 @@
 import { Icon } from '../../../utils/atoms/Icon'
 import { roles } from '../../../Portal/shared/constants/roles'
 import type { SidebarKey } from '../../../Portal/shared/types'
-import { estudiantes, nombreCompleto } from '../../PadronGeneral/constants/padronData'
+import { nombreCompleto } from '../../PadronGeneral/constants/padronData'
+import { estudianteEnCache } from '../services/estudiantesApi'
 import { ServiciosAcademicosTemplate } from '../templates/ServiciosAcademicosTemplate'
 import { modulosProximamente, textosModulo } from '../constants/modulos'
 import { rutaServicios } from '../constants/rutas'
@@ -15,7 +16,7 @@ function leerAlumnoSeleccionado(): string | null {
   const query = window.location.hash.split('?')[1] ?? ''
   const id = new URLSearchParams(query).get('alumno')
   if (!id) return null
-  const estudiante = estudiantes.find((registro) => registro.id === id)
+  const estudiante = estudianteEnCache(id)
   return estudiante ? nombreCompleto(estudiante) : null
 }
 

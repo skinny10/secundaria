@@ -1,18 +1,38 @@
-import { ApiError, apiRequest } from '../../utils/services/apiClient'
+import { ApiError, SESSION_STORAGE_KEY } from '../../utils/services/apiClient'
+import { usersApi } from '../../utils/services/sigeanApi'
 import { mockSignIn } from './mockAuth'
-import type { AuthCredentials, AuthSession, AuthValidationErrors } from '../types/auth'
+import type { AuthCredentials, AuthSession, AuthValidationErrors, UserRole } from '../types/auth'
 
-export const ALLOWED_DOMAINS = ['@edomex.nuevaescuela.mx', '@sep.gob.mx'] as const
+export const SESSION_CHANGED_EVENT = 'nexusedu:session-changed'
 
-const SESSION_STORAGE_KEY = 'nexusedu:session'
-
-// El mock se mantiene activo hasta definir VITE_USE_MOCK_API="false" en el .env.
-const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API !== 'false'
+const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true'
 
 export function isValidInstitutionalEmail(email: string): boolean {
   const normalized = email.trim().toLowerCase()
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized)) return false
-  return ALLOWED_DOMAINS.some((domain) => normalized.endsWith(domain))
+  return /^[^\s@]+@[^\s@]+(\.[^\s@]+)*$/.test(normalized)
+}
+
+function decodificarExpiracion(token: string): string | undefined {
+  try {
+    const payload = token.split('.')[1]
+    if (!payload) return undefined
+    const json = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/'))) as { exp?: number }
+    return typeof json.exp === 'number' ? new Date(json.exp * 1000).toISOString() : undefined
+  } catch {
+    return undefined
+  }
+}
+
+export function rutaInicioPorRol(role: UserRole): string {
+  switch (role) {
+    case 'ACADEMIC_SERVICES':
+      return '#servicios-academicos/padron'
+    case 'PSYCHOLOGIST':
+      return '#dashboard'
+    case 'TEACHER':
+    case 'PREFECT':
+      return '#maestros'
+  }
 }
 
 export function validateLogin(values: {
@@ -25,8 +45,7 @@ export function validateLogin(values: {
   if (!email) {
     errors.email = 'Ingrese su correo institucional.'
   } else if (!isValidInstitutionalEmail(email)) {
-    errors.email =
-      'El correo debe ser institucional (@edomex.nuevaescuela.mx o @sep.gob.mx).'
+    errors.email = 'Ingrese un correo válido.'
   }
 
   if (!values.password) {
@@ -46,30 +65,34 @@ export async function signIn(
     return mockSignIn(credentials, options)
   }
 
-  return apiRequest<AuthSession>('/auth/login', {
-    method: 'POST',
-    body: {
-      email: credentials.email.trim().toLowerCase(),
-      password: credentials.password,
-      remember: credentials.remember ?? false,
+  const respuesta = await usersApi.login(
+    credentials.email.trim().toLowerCase(),
+    credentials.password,
+    options.signal
+  )
+  return {
+    token: respuesta.token,
+    expiresAt: decodificarExpiracion(respuesta.token),
+    user: {
+      id: String(respuesta.user.id),
+      username: respuesta.user.username,
+      email: respuesta.user.email,
+      fullName: respuesta.user.fullName ?? respuesta.user.username,
+      role: respuesta.user.role,
+      teacherId: respuesta.user.teacherId,
     },
-    signal: options.signal,
-  })
+  }
 }
 
 export async function signOut(options: { signal?: AbortSignal } = {}): Promise<void> {
-  try {
-    if (!USE_MOCK_API) {
-      await apiRequest<void>('/auth/logout', { method: 'POST', signal: options.signal })
-    }
-  } finally {
-    clearSession()
-  }
+  void options
+  clearSession()
 }
 
 export function saveSession(session: AuthSession, remember: boolean): void {
   const storage = remember ? window.localStorage : window.sessionStorage
   storage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session))
+  window.dispatchEvent(new CustomEvent(SESSION_CHANGED_EVENT))
 }
 
 export function getSession(): AuthSession | null {
@@ -78,7 +101,16 @@ export function getSession(): AuthSession | null {
     window.sessionStorage.getItem(SESSION_STORAGE_KEY)
   if (!raw) return null
   try {
-    return JSON.parse(raw) as AuthSession
+    const session = JSON.parse(raw) as AuthSession
+    if (!session?.token || !session.user?.role) {
+      clearSession()
+      return null
+    }
+    if (session.expiresAt && new Date(session.expiresAt).getTime() <= Date.now()) {
+      clearSession()
+      return null
+    }
+    return session
   } catch {
     clearSession()
     return null
@@ -88,6 +120,7 @@ export function getSession(): AuthSession | null {
 export function clearSession(): void {
   window.localStorage.removeItem(SESSION_STORAGE_KEY)
   window.sessionStorage.removeItem(SESSION_STORAGE_KEY)
+  window.dispatchEvent(new CustomEvent(SESSION_CHANGED_EVENT))
 }
 
 export function mapAuthError(error: unknown): string {
@@ -113,4 +146,9 @@ export function mapAuthError(error: unknown): string {
   if (error instanceof Error) return error.message
 
   return 'Ocurrió un error inesperado. Intente nuevamente.'
+}
+
+export function cerrarSesion(): void {
+  clearSession()
+  window.location.hash = '#login'
 }
